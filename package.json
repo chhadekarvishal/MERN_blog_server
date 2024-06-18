@@ -9,7 +9,7 @@
     "nodemailer": "^6.9.13"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node api/server.js",
     "dev": "nodemon server.js",
     "vercel-buid": "Blog Post",
     "test": "jest"
