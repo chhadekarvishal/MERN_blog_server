@@ -6,5 +6,9 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.3"
+  },
+  "scripts": {
+    "build": "npm run generate-html && vite build",
+    "generate-html": "mkdir -p dist && cp server.html dist/"
   }
 }
