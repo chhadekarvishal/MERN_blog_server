@@ -2,7 +2,7 @@ require("dotenv").config();
 const request = require("supertest");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const app = require("./../../api/server");
+const app = require("./../../api/index");
 const Blog = require("./../../api/models/Blog");
 const User = require("./../../api/models/User");
 
