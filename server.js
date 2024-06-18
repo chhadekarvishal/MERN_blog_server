@@ -1,11 +1,23 @@
-const express = require('express');
+const express = require("express");
+const dotenv = require("dotenv");
+const authRoutes = require("./api/routes/authRoutes");
+const blogRoutes = require("./api/routes/blog");
+const connectDB = require("./api/config/dbConfig");
+
+dotenv.config();
+
+connectDB();
+
 const app = express();
-const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/blogs", blogRoutes);
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
