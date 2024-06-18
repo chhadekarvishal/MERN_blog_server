@@ -18,11 +18,16 @@ exports.register = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
-    //if not, create a new user
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create new user
     const user = new User({
       name,
       email,
-      password,
+      password: hashedPassword,
     });
 
     // Save user to database
@@ -58,14 +63,12 @@ exports.login = async (req, res) => {
 
     // Check if user exists
     const user = await User.findOne({ email });
-
-    //If user is not present
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const isMatch = password === user.password;
-
+    // Compare passwords
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -85,7 +88,6 @@ exports.login = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error in login: ", error.message);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -110,11 +112,10 @@ exports.resetPassword = async (req, res) => {
       expiresIn: "1h",
     });
 
-    // Create reset URL
-    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+    // Send reset token via email
+    const resetUrl = `http://localhost:5000/reset-password/${resetToken}`; //for testing purpose only, once deployed on server domain needs to be changed
     const message = `You requested a password reset. Please go to this link to reset your password: ${resetUrl}`;
 
-    // Send email
     await sendEmail({
       to: user.email,
       subject: "Password Reset",
