@@ -21,6 +21,9 @@ const blogSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
   },
+  thumbnailUrl: {
+    type: String,
+  },
 });
 
 const Blog = mongoose.model("Blog", blogSchema);

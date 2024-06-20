@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cors = require("cors");
 const express = require("express");
 const authRoutes = require("./routes/authRoutes");
 const blogRoutes = require("./routes/blog");
@@ -7,6 +8,14 @@ const connectDB = require("./config/dbConfig");
 connectDB();
 
 const app = express();
+
+// Use cors middleware
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Your frontend's URL
+    credentials: true, // Allow cookies if needed
+  })
+);
 
 app.use(express.json());
 

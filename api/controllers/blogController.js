@@ -1,19 +1,21 @@
 const Blog = require("./../models/Blog");
 
 exports.createBlog = async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, thumbnailUrl } = req.body;
 
   try {
     const newBlog = new Blog({
       title,
       content,
       author: req.user.id,
+      thumbnailUrl,
     });
 
     const savedBlog = await newBlog.save();
 
     res.status(201).json(savedBlog);
   } catch (error) {
+    console.log('ERROR', error)
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
