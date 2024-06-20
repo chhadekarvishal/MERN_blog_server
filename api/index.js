@@ -12,7 +12,7 @@ const app = express();
 // Use cors middleware
 app.use(
   cors({
-    origin: "https://ezzy-blog-frontend-3sj5acaln-vishal-lalit-chhadekars-projects.vercel.app",
+    origin: "https://mern-blog-server-eta.vercel.app",
     // origin: "http://localhost:3000", // Your frontend's URL
     credentials: true, // Allow cookies if needed
   })
